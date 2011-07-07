@@ -19,11 +19,18 @@ str_ltchart* load_chart(const char* file, str_light* lights, int lightnum) {
 
 	char ch;
 	int line_num = 0;
+	int in_comment = 0;
 	while ((ch = fgetc(fp)) != EOF) {
 		switch (ch) {
+		case '#': // for comment
+				in_comment = 1;
+			break;
 		case '\n':
 		case '\r':
-			{
+			{	if (in_comment) {
+					in_comment = 0;
+					continue;
+				}
 				if (line_num < lightnum)
 					return NULL; // error format;
 				status = (LightStatus**)realloc(status,sizeof(LightStatus*) * (++frame_size));
@@ -41,6 +48,8 @@ str_ltchart* load_chart(const char* file, str_light* lights, int lightnum) {
 		case '1':
 		case '0':
 			{
+				if(in_comment)
+					continue;
 				if (line_num > lightnum - 1)
 					continue; // line content out of lightnum, ignore
 				status[frame_size - 1][line_num++] = (ch == '1')?1:0;
