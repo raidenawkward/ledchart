@@ -4,7 +4,7 @@ OBJS := chart.o lctrl.o light.o main.o
 
 EXEC := a
 
-#CFLAGS :=
+CFLAGS += -g
 
 
 all:$(EXEC)

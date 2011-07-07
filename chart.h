@@ -8,4 +8,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+str_ltchart* load_chart(const char* file, str_light *lights, int lightnum);
+
 #endif // CHART_H

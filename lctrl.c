@@ -32,16 +32,23 @@ int frame_play(int device, str_light *light, LightStatus *status, int lightnum) 
 	return 0;
 }
 
-int chart_play(str_ltchart *chart) {
+int chart_play(str_ltchart *chart,long replay,int interval) {
 	if (!chart)
 		return 0;
 	int fd;
 	if ((fd = open(LTCTRL_DEVICE,O_NOCTTY)) < 0)
 		return 0;
 	long i;
-	for (i = 0; i < chart->frame_count; ++i) {
-		if (!frame_play(fd,chart->lights,chart->light_status[i],chart->light_num))
-			break;;
+	long times = replay?replay:-1;
+
+	while (times) {
+		for (i = 0; i < chart->frame_count; ++i) {
+			if (!frame_play(fd,chart->lights,chart->light_status[i],chart->light_num))
+				break;
+			sleep(interval);
+		}
+		if (times > 0)
+			-- times;
 	}
 	close(fd);
 	return 1;

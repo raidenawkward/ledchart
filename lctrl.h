@@ -18,7 +18,7 @@ typedef int LightStatus;
 
 typedef struct {
 	int light_num;
-	struct str_light* lights;
+	str_light* lights;
 
 	LightStatus** light_status;
 	long frame_count;
@@ -26,6 +26,6 @@ typedef struct {
 
 int light_ctrl(str_light *light, LightStatus status);
 int frame_play(int device, str_light* lights, LightStatus *status, int lightnum);
-int chart_play(str_ltchart* chart);
+int chart_play(str_ltchart* chart,long replay,int interval);
 
 #endif

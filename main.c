@@ -4,39 +4,36 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "lctrl.h"
+#include "chart.h"
 
-#include  <fcntl.h>
-#include  <unistd.h>
-#include  <signal.h>
-#include  <sys/stat.h>
-#include  <linux/kd.h>
-#include  <sys/types.h>
-#include  <sys/ioctl.h>
+
+#define DEFAULT_LIGHT_NUM 3 // num lock, caps lock, scroll lock
 
 int main(int argc, char** argv) {
-#ifdef TEST_FOR_FRAME_PLAY
+
+	if (argc < 2) {
+		printf("usage : %s [chart]\n",argv[0]);
+		return 0;
+	}
+
 	str_light* l_num = make_light(LT_NUMLOCK);
 	str_light* l_caps = make_light(LT_CAPSLOCK);
 	str_light* l_scroll = make_light(LT_SCROLLLOCK);
 
-	str_light* lights = (str_light*)malloc(3*sizeof(str_light));
+	str_light* lights = (str_light*)malloc(DEFAULT_LIGHT_NUM * sizeof(str_light));
 	lights[0] = *l_num;
 	lights[1] = *l_caps;
 	lights[2] = *l_scroll;
 
-	LightStatus *status = (LightStatus*)malloc(3*sizeof(LightStatus));
-	status[0] = 0;
-	status[1] = 0;
-	status[2] = 1;
 
-	int fd;
-    if ((fd = open(LTCTRL_DEVICE,O_NOCTTY)) < 0)
-        return 0;
+	str_ltchart* chart = load_chart(argv[1],lights,DEFAULT_LIGHT_NUM);
+	if (!chart) {
+		printf("error when loading chart file %s\n",argv[1]);
+		return 1;
+	}
 
-	frame_play(fd,lights,status,3);
+	chart_play(chart,0,2);
 
-	close(fd);
-#endif //TEST_FOR_FRAME_PLAY
 	return 0;
 }
 
