@@ -7,12 +7,6 @@
 #include <sys/ioctl.h>
 #include <fcntl.h>
 
-int light_ctrl(str_light *light, LightStatus status) {
-	if (!light)
-		return 0;
-	
-	return 0;
-}
 
 int frame_play(int device, str_light *light, LightStatus *status, int lightnum) {
 	char c;

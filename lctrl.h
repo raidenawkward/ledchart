@@ -24,7 +24,6 @@ typedef struct {
 	long frame_count;
 } str_ltchart;
 
-int light_ctrl(str_light *light, LightStatus status);
 int frame_play(int device, str_light* lights, LightStatus *status, int lightnum);
 int chart_play(str_ltchart* chart,long replay,int interval);
 
