@@ -32,7 +32,7 @@ int main(int argc, char** argv) {
 		return 1;
 	}
 
-	chart_play(chart,0,2);
+	chart_play(chart,0,1);
 
 	return 0;
 }

@@ -29,7 +29,7 @@ int frame_play(int device, str_light *light, LightStatus *status, int lightnum) 
 		if (ioctl(device,KDSETLED,c) != 0)
 			return 0;
 	}
-	return 0;
+	return 1;
 }
 
 int chart_play(str_ltchart *chart,long replay,int interval) {
