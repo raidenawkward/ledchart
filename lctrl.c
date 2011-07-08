@@ -16,9 +16,9 @@ int frame_play(int device, str_light *light, LightStatus *status, int lightnum) 
 	for (i = 0; i < lightnum; ++i) {
 		int key = light[i].key;
 		if (status[i]) {
-			c &= ~key;
-		} else {
 			c |= key;
+		} else {
+			c &= ~key;
 		}
 		if (ioctl(device,KDSETLED,c) != 0)
 			return 0;
