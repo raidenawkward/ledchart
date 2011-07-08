@@ -8,10 +8,13 @@
 #include "chart.h"
 #include <fcntl.h>
 
+
+#define VERSION "0.11"
 #define DEFAULT_LIGHT_NUM 3 // num lock, caps lock, scroll lock
 
 void show_help_info();
 void show_chart_example();
+void show_program_version(const char* version);
 
 int main(int argc, char** argv) {
 
@@ -32,13 +35,17 @@ int main(int argc, char** argv) {
 		if (strcmp(argv[argi],"-r") == 0) {
 			if (argv[argi + 1][0] != '-' && argi + 1 < argc) {
 				repeat = atoi(argv[++argi]);
-				if (repeat < 0) {
+				if (repeat <= 0) {
 					show_help_info();
 					return 0;
 				}
 			} else {
-				repeat = 0;
+				show_help_info();
+				return 0;
 			}
+		} else if (strcmp(argv[argi],"-R") == 0) {
+			repeat = 0;
+
 		} else if (strcmp(argv[argi],"-s") == 0) {
 			if (argi + 3 > argc) {
 				show_help_info();
@@ -59,9 +66,15 @@ int main(int argc, char** argv) {
 		} else if (strcmp(argv[argi],"-e") == 0) {
 			show_chart_example();
 			return 0;
+
+		} else if (strcmp(argv[argi],"-v") == 0) {
+			show_program_version(VERSION);
+			return 0;
+
 		} else if (strcmp(argv[argi],"-h") == 0) {
 			show_help_info();
 			return 0;
+
 		} else {
 			if (argv[argi][0] == '-') {
 				show_help_info();
@@ -119,10 +132,12 @@ void show_help_info() {
 	printf("ledchart - ctrls 3 led lights (num lock, caps lock, scroll lock) by chart or status.\n");
 	printf("usage : ledchart [options] [chart file | led status]\n");
 	printf("options :\n");
-	printf("-r [repeat times]\t-\tplay the chart cyclically by n times, WILL REPEAT FOREVER if n equals 0 or n is not specified;\n");
+	printf("-r [repeat times]\t-\tplay the chart cyclically by n(of course bigger than 0) times;\n");
+	printf("-R\t-\twill repeat all the time;\n");
 	printf("-s status\t-\tdo not use a chart file, use a one-time status info instead (for example ledchart -s 0 1 0);\n");
 	printf("-i interval\t-\tset time interval(second);\n");
 	printf("-e\t-\tshow chart example;\n");
+	printf("-v\t-\tshow program version;\n");
 	printf("-h\t-\tshow this message.\n");
 	printf("copyleft by raiden.ht@gmail.com\n");
 	printf("it may be a silly program, but enjoy it. -_-\n");
@@ -131,6 +146,10 @@ void show_help_info() {
 void show_chart_example() {
 	printf("this is a chart file example:\n");
 	printf("0,0,0\n0,0,1\n0,1,0\n0,1,1\n1,0,0\n1,0,1\n1,1,0\n1,1,1\n");
+}
+
+void show_program_version(const char* version) {
+	printf("version : %s\n",version);
 }
 
 #endif // MAIN_C
