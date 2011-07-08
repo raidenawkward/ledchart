@@ -1,0 +1,15 @@
+ledchart - ctrls 3 led lights (num lock, caps lock, scroll lock) by chart or status
+
+by raiden.ht@gmail.com
+
+for linux only, for root user only
+
+chart example:
+0,0,0
+0,0,1
+0,1,0
+0,1,1
+1,0,0
+1,0,1
+1,1,0
+1,1,1

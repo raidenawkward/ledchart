@@ -2,7 +2,7 @@
 # created by raiden on 20110707
 OBJS := chart.o lctrl.o light.o main.o
 
-EXEC := a
+EXEC := ledchart
 
 CFLAGS += -g
 
@@ -14,3 +14,7 @@ clean:
 	rm -f $(OBJS) $(EXEC)
 distclean:
 	rm -f *.o $(EXEC)
+install:
+	cp $(EXEC) /sbin/
+uninstall:
+	rm /sbin/$(EXEC)
